@@ -1,0 +1,44 @@
+version: "3.9"
+
+services:
+  db_ebody:
+    image: postgres:15
+    container_name: adik_postgres
+    volumes:
+      - ~/.pg/pg_data/poko:/var/lib/postgresql/data
+    env_file:
+      - .env
+
+  web_project:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    container_name: yt_django
+    depends_on:
+      - db_ebody
+    volumes:
+      - static_volume:/adik/static
+      - media_volume:/adik/media
+    environment:
+      - POSTGRES_HOST=db_ebody
+    env_file:
+      - .env
+    command: >
+      bash -c "sleep 20 && python manage.py collectstatic --noinput && python manage.py migrate && gunicorn -b 0.0.0.0.8001 my_store.wsgi:application"
+  nginx:
+    build:
+      dockerfile: ./Dockerfile
+      context: ./nginx/
+    container_name: yt_nginx
+    image: yt_nginx
+    volumes:
+      - static_volume:/adik/static
+      - media_volume:/adik/media
+    depends_on:
+      - web_project
+    ports:
+      - "${NGINX_EXTERNAL_PORT}:80"
+
+volumes:
+  static_volume:
+  media_volume:

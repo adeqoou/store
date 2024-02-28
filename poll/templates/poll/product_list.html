@@ -1,0 +1,42 @@
+{% extends 'poll/products.html' %}
+{% block content %}
+            <div class="row">
+
+                 {% for product in products %}
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100">
+                        <a href="#">
+                            <img class="card-img-top"
+                                 src="{{ product.image.url }}"
+                                 alt="">
+                        </a>
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <a href="#">{{ product.name }}</a>
+                            </h4>
+                            <h5>{{ product.price }} руб</h5>
+                            <p class="card-text">{{ product.description }}</p>
+                        </div>
+                        <form method="post" action="{% url 'basket_add' product_id=product.id %}">
+                            {% csrf_token %}
+                            <div class="card-footer text-center">
+                            <button type="submit" class="btn btn-outline-success">Отправить в корзину</button>
+                        </div>
+                        </form>
+
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+{% endblock %}
+
+{% block footer %}
+<!-- Footer -->
+<footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Store 2022</p>
+    </div>
+    <!-- /.container -->
+</footer>
+{% endblock %}
+
