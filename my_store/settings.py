@@ -233,8 +233,6 @@ EMAIL_HOST_USER = 'aidarbekovadahan8@gmail.com'
 EMAIL_HOST_PASSWORD = 'sect empd aukw efej'
 EMAIL_USE_TLS = True
 
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-SERVER_EMAIL = EMAIL_HOST_USER
-EMAIL_ADMIN = EMAIL_HOST_USER
 
-# sect empd aukw efej
+# sessions
+SESSION_COOKIE_AGE = 3600
