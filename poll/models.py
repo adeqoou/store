@@ -18,7 +18,7 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=7, decimal_places=2)
     quantity = models.PositiveIntegerField(default=0)
     image = models.ImageField(upload_to='products_images')
-    product_id = models.ForeignKey(to=ProductCategory, on_delete=models.PROTECT)
+    category = models.ForeignKey(to=ProductCategory, on_delete=models.PROTECT)
 
     def __str__(self):
         return f'Product name: {self.name} | Category: {self.product_id}'
@@ -27,7 +27,7 @@ class Product(models.Model):
 class Basket(models.Model):
     user = models.ForeignKey(to=User, on_delete=models.CASCADE)
     product = models.ForeignKey(to=Product, on_delete=models.CASCADE)
-    quantity = models.PositiveSmallIntegerField(default=0)
+    quantity = models.PositiveIntegerField(default=0)
     created_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

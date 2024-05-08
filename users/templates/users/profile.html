@@ -15,7 +15,7 @@
         <div class="alert alert-success{{ messages.tags }}" role="alert">
             {{ message }}
         </div>
-        <button class="close" type="button" data-dismiss="alert" aria-label="Close">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             X
         </button>
     {% endfor %}
@@ -81,7 +81,6 @@
                 </div>
             </form>
         </div>
-        {% include 'poll/basket.html' %}
     </div>
 </div>
 {% endblock %}

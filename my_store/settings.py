@@ -94,11 +94,11 @@ WSGI_APPLICATION = 'my_store.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'for_dj',
-        'USER': 'postgres',
-        'PASSWORD': 'adeqou16',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'NAME': os.getenv('POSTGRES_DB', 'for_dj'),
+        'USER': os.getenv('POSTGRES_USER', 'postgres'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'adeqou16'),
+        'HOST': os.getenv('POSTGRES_HOST', '127.0.0.1'),
+        'PORT': os.getenv('POSTGRES_PORT', 5432),
     }
 }
 
@@ -146,16 +146,16 @@ LOGOUT_REDIRECT_URL = 'index'
 
 STATIC_URL = '/static/'
 
-# STATIC_ROOT = 'staticfiles/'
+STATIC_ROOT = 'staticfiles'
 
 STATICFILES_DIRS = [
-    BASE_DIR / 'static/'
+    BASE_DIR / 'static'
 ]
 
 # media_dirs
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

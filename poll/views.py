@@ -3,45 +3,33 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import (
     TemplateView,
     View,
-    ListView)
+    ListView,
+    DeleteView)
 from django.urls import reverse_lazy
-from django.http import HttpResponseRedirect
 from .models import *
-from django.contrib import messages
 
 
 class IndexView(TemplateView):
     template_name = 'poll/index.html'
 
 
-class ProductView(TemplateView):
+class ProductView(ListView):
+    model = Product
+    paginate_by = 5
     template_name = 'poll/products.html'
+    context_object_name = 'products'
 
-    def get(self, request, *args, **kwargs):
-        context = {
-            'products': Product.objects.all(),
-            'categories': ProductCategory.objects.all(),
-        }
-        return render(request, self.template_name, context)
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = ProductCategory.objects.all()
+        return context
 
 
-class BasketView(LoginRequiredMixin, View):
-    template_name = 'poll/profile.html'
+class BasketAddView(LoginRequiredMixin, View):
+    model = Basket
     login_url = 'login_pg'
 
-    def get(self, request, product_id, *args, **kwargs):
-        product = Product.objects.get(id=product_id)
-        baskets = Basket.objects.filter(user=request.user, product_id=product_id)
-        total_price = sum([basket.product.price * basket.quantity for basket in baskets])
-
-        context = {
-            'baskets': baskets,
-            'total_price': total_price,
-            'product': product,
-        }
-        return render(request, self.template_name, context)
-
-    def post(self, request, product_id, *args, **kwargs):
+    def post(self, request, product_id):
         product = Product.objects.get(id=product_id)
         baskets = Basket.objects.filter(user=request.user, product=product)
 
@@ -51,27 +39,39 @@ class BasketView(LoginRequiredMixin, View):
             basket = baskets.first()
             basket.quantity += 1
             basket.save()
-        return redirect('index')
+        return redirect('basket')
 
 
-class RemoveBasketView(View):
-        def get(self, request, basket_id):
-            basket = Basket.objects.get(id=basket_id)
-            basket.delete()
-            message = messages.success(self.request, 'Product deleted')
-            return message
+class BasketListView(ListView):
+    model = Basket
+    template_name = 'poll/basket.html'
+
+    def get(self, request, **kwargs):
+        baskets = Basket.objects.filter(user=request.user)
+        total_sum = sum(basket.product.price * basket.quantity for basket in baskets)
+
+        context = {
+            'baskets': baskets,
+            'total_sum': total_sum
+        }
+        return render(request, self.template_name, context)
 
 
-class ProductListAndPaginateView(ListView):
+class RemoveBasketView(DeleteView):
+    def get(self, request, basket_id):
+        basket = Basket.objects.get(id=basket_id)
+        basket.delete()
+        return redirect('basket')
+
+
+class ProductListView(ListView):
     model = Product
     template_name = 'poll/product_list.html'
-    paginate_by = 4
-    context_object_name = 'products'
 
     def get(self, request, category_id=None, *args, **kwargs):
-        products = Product.objects.filter(product_id=category_id) if category_id else Product.objects.all()
+        product = Product.objects.filter(product_id=category_id) if category_id else Product.objects.all()
         context = {
-            'product': products
+            'products': product
         }
         return render(request, self.template_name, context)
 
@@ -86,6 +86,7 @@ class ProductListAndPaginateView(ListView):
     #     basket.quantity += quantity
     #     basket.save()
     #     return redirect('basket')
+
 
 
 

@@ -1,30 +1,30 @@
 version: "3.9"
 
+# Названия сервисов
 services:
-  db_ebody:
-    image: postgres:15
-    container_name: adik_postgres
+  serv_postgres:
+    image: postgres:16
+    container_name: yt_postgres
     volumes:
-      - ~/.pg/pg_data/poko:/var/lib/postgresql/data
+      - ~/.pg/pg_data/yt:/var/lib/postgresql/data
     env_file:
       - .env
-
-  web_project:
+  django_project:
     build:
-      dockerfile: Dockerfile
-      context: .
+     dockerfile: ./Dockerfile
+     context: .
     container_name: yt_django
     depends_on:
-      - db_ebody
+      - serv_postgres
     volumes:
-      - static_volume:/adik/static
-      - media_volume:/adik/media
+      - static_volume:/yt/staticfiles
+      - media_volume:/yt/media
     environment:
-      - POSTGRES_HOST=db_ebody
+      - POSTGRES_HOST=serv_postgres
     env_file:
       - .env
     command: >
-      bash -c "sleep 20 && python manage.py collectstatic --noinput && python manage.py migrate && gunicorn -b 0.0.0.0.8001 my_store.wsgi:application"
+      bash -c "sleep 20 && python manage.py collectstatic --noinput && python manage.py migrate && gunicorn -b 0.0.0.0:8000 my_store.wsgi:application"
   nginx:
     build:
       dockerfile: ./Dockerfile
@@ -32,10 +32,10 @@ services:
     container_name: yt_nginx
     image: yt_nginx
     volumes:
-      - static_volume:/adik/static
-      - media_volume:/adik/media
+      - static_volume:/yt/staticfiles
+      - media_volume:/yt/media
     depends_on:
-      - web_project
+      - django_project
     ports:
       - "${NGINX_EXTERNAL_PORT}:80"
 

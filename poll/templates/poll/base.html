@@ -46,7 +46,7 @@
                             <li>
                                 <a class="dropdown-item" href="{% url 'profile_pg' pk=request.user.pk %}">Профиль</a>
                             </li>
-                            <li><a class="dropdown-item" href="orders/orders.html">Заказы</a></li>
+                            <li><a class="dropdown-item" href="{% url 'basket' %}">Корзина</a></li>
                                <li>
                                    <form method="post" action="{% url 'logout' %}">
 
