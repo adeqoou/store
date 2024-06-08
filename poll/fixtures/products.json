@@ -1,0 +1,184 @@
+[
+  {
+    "model": "poll.product",
+    "pk": 1,
+    "fields": {
+      "name": "Браслет",
+      "description": "Крутой браслет",
+      "slug": null,
+      "price": "399.00",
+      "quantity": 35,
+      "image": "products_images/acces.jpg",
+      "category": 4
+    }
+  },
+  {
+    "model": "poll.product",
+    "pk": 2,
+    "fields": {
+      "name": "Галстук",
+      "description": "Стильный",
+      "slug": null,
+      "price": "499.00",
+      "quantity": 23,
+      "image": "products_images/acces-2.jpg",
+      "category": 4
+    }
+  },
+  {
+    "model": "poll.product",
+    "pk": 3,
+    "fields": {
+      "name": "Рюкзак",
+      "description": "Крутой",
+      "slug": null,
+      "price": "999.00",
+      "quantity": 26,
+      "image": "products_images/backpack.jpg",
+      "category": 2
+    }
+  },
+  {
+    "model": "poll.product",
+    "pk": 4,
+    "fields": {
+      "name": "Зеленая сумка",
+      "description": "удобный",
+      "slug": null,
+      "price": "999.00",
+      "quantity": 38,
+      "image": "products_images/backpack-2.jpg",
+      "category": 4
+    }
+  },
+  {
+    "model": "poll.product",
+    "pk": 5,
+    "fields": {
+      "name": "Коричневая сумка",
+      "description": "Стильная",
+      "slug": null,
+      "price": "999.00",
+      "quantity": 21,
+      "image": "products_images/backpack--3.jpg",
+      "category": 5
+    }
+  },
+  {
+    "model": "poll.product",
+    "pk": 6,
+    "fields": {
+      "name": "Брюки коричневые",
+      "description": "Удобно носить",
+      "slug": null,
+      "price": "1399.00",
+      "quantity": 30,
+      "image": "products_images/brown-pants.jpg",
+      "category": 1
+    }
+  },
+  {
+    "model": "poll.product",
+    "pk": 7,
+    "fields": {
+      "name": "Бежевое пальто",
+      "description": "Классное, стильное",
+      "slug": null,
+      "price": "5999.00",
+      "quantity": 27,
+      "image": "products_images/coat.jpg",
+      "category": 1
+    }
+  },
+  {
+    "model": "poll.product",
+    "pk": 8,
+    "fields": {
+      "name": "Черное пальто",
+      "description": "Стильное, удобное",
+      "slug": null,
+      "price": "5999.00",
+      "quantity": 31,
+      "image": "products_images/coat-2.jpg",
+      "category": 1
+    }
+  },
+  {
+    "model": "poll.product",
+    "pk": 9,
+    "fields": {
+      "name": "Ботинки dr.martens",
+      "description": "Качественные",
+      "slug": null,
+      "price": "2999.00",
+      "quantity": 33,
+      "image": "products_images/dr.martens.jpg",
+      "category": 3
+    }
+  },
+  {
+    "model": "poll.product",
+    "pk": 10,
+    "fields": {
+      "name": "Очки зеленого цвета",
+      "description": "Помогают стильно выглядеть",
+      "slug": null,
+      "price": "699.00",
+      "quantity": 0,
+      "image": "products_images/glasses.jpg",
+      "category": 4
+    }
+  },
+  {
+    "model": "poll.product",
+    "pk": 11,
+    "fields": {
+      "name": "Очки черного цвета",
+      "description": "Крутые",
+      "slug": null,
+      "price": "699.00",
+      "quantity": 24,
+      "image": "products_images/glasses-2.jpg",
+      "category": 5
+    }
+  },
+  {
+    "model": "poll.product",
+    "pk": 12,
+    "fields": {
+      "name": "Худи",
+      "description": "Теплые, комфортные",
+      "slug": null,
+      "price": "2399.00",
+      "quantity": 26,
+      "image": "products_images/hoodie.jpg",
+      "category": 1
+    }
+  },
+  {
+    "model": "poll.product",
+    "pk": 13,
+    "fields": {
+      "name": "Кроссовки reebok",
+      "description": "Если хотите не уставать, то это лучший выбор для вас",
+      "slug": null,
+      "price": "2399.00",
+      "quantity": 25,
+      "image": "products_images/shoes-2.jpg",
+      "category": 3
+    }
+  },
+  {
+    "model": "poll.product",
+    "pk": 14,
+    "fields": {
+      "name": "Свитшот зеленого цвета",
+      "description": "Сделано из качественного материала",
+      "slug": null,
+      "price": "2699.00",
+      "quantity": 33,
+      "image": "products_images/sweetshot-2.jpg",
+      "category": 2
+    }
+  }
+]

@@ -1,0 +1,33 @@
+{% extends 'poll/base.html' %}
+
+{% block title %}
+<title>Оформленный заказ</title>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5 pt-5">
+    <div class="d-flex flex-wrap">
+        {% for order in orders %}
+        <div class="card m-2" style="margin-top: 200px; width: 30rem;">
+            <div class="card-body">
+                <h5 class="card-title">Информация о заказе</h5>
+                <h5 class="card-text">{{ order.basket.product.name }}</h5>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Количество: {{ order.quantity }}</li>
+                </ul>
+            </div>
+            <form method="post" action="{% url 'order_delete' order.id %}">
+                {% csrf_token %}
+                <div class="card-body">
+                    <button type="submit" class="btn btn-success">Отменить заказ</button>
+                </div>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+<!--     <div class="card" style="height: 100px; width: 300px; margin-left: 700px; margin-bottom: 20px;-->
+<!--        background-color: #192841">-->
+<!--            <h5 class="text-white" style="padding-top: 30px; padding-left: 20px;">Общая сумма: {{ total_sum }} руб</h5>-->
+<!--     </div>-->
+</div>
+{% endblock %}

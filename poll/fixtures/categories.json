@@ -1,0 +1,47 @@
+[
+  {
+    "model": "poll.productcategory",
+    "pk": 1,
+    "fields": {
+      "name": "Одежда",
+      "description": null,
+      "slug": null
+    }
+  },
+  {
+    "model": "poll.productcategory",
+    "pk": 2,
+    "fields": {
+      "name": "Новинки",
+      "description": null,
+      "slug": null
+    }
+  },
+  {
+    "model": "poll.productcategory",
+    "pk": 3,
+    "fields": {
+      "name": "Обувь",
+      "description": null,
+      "slug": null
+    }
+  },
+  {
+    "model": "poll.productcategory",
+    "pk": 4,
+    "fields": {
+      "name": "Акссесуары",
+      "description": null,
+      "slug": null
+    }
+  },
+  {
+    "model": "poll.productcategory",
+    "pk": 5,
+    "fields": {
+      "name": "Подарки",
+      "description": null,
+      "slug": null
+    }
+  }
+]
