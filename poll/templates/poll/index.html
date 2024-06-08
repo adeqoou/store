@@ -13,7 +13,15 @@
 </head>
 
 {% block content %}
-<!-- Page Content -->
+
+<style>
+    body {
+        background-image: url("/static/vendor/img/back.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+</style>
+
 <section>
     {% for message in messages %}
     <div class="alert alert-success{{ messages.tags }}" role="alert">

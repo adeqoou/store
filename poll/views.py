@@ -1,6 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import (
+    CreateView,
     TemplateView,
     View,
     ListView,
@@ -68,24 +69,58 @@ class ProductListView(ListView):
     model = Product
     template_name = 'poll/product_list.html'
 
-    def get(self, request, category_id=None, *args, **kwargs):
-        product = Product.objects.filter(product_id=category_id) if category_id else Product.objects.all()
+    def get(self, request, category_id=None):
+        product = Product.objects.filter(category_id=category_id) if category_id else Product.objects.all()
         context = {
             'products': product
         }
         return render(request, self.template_name, context)
 
 
-    # def post(self, request, *args, **kwargs):
-    #     product_id = request.POST.get('product_id')
+class OrderAddView(CreateView):
+    model = Orders
 
-    #     quantity = int(request.POST.get('quantity', 1))
-    #     product = Product.objects.get(id=product_id)
-    #
-    #     basket, created = Basket.objects.get_or_create(user=request.user, product=product)
-    #     basket.quantity += quantity
-    #     basket.save()
-    #     return redirect('basket')
+    def post(self, request, *args, **kwargs):
+        basket_id = kwargs.get('basket_id')
+        user = request.user
+        basket = get_object_or_404(Basket, id=basket_id, user=user)
+
+        order = Orders.objects.create(user=user, basket_id=basket_id)
+        basket.order = order
+        basket.save()
+
+        return redirect('orders')
+
+
+class OrderListView(ListView):
+    model = Orders
+    template_name = 'poll/order_add.html'
+
+    def get(self, request):
+        baskets = Basket.objects.filter(user=request.user)
+        orders = Orders.objects.filter(user=request.user)
+        total_sum = sum(basket.product.price * basket.quantity for basket in baskets)
+
+        context = {
+            'orders': orders,
+            'total_sum': total_sum
+        }
+        return render(request, self.template_name, context)
+
+
+class OrderRemoveView(DeleteView):
+    model = Orders
+    success_url = reverse_lazy('orders')
+    def get(self, request, **kwargs):
+        order = self.kwargs.get('order')
+        order.delete()
+        return self.success_url
+
+
+
+
+
+
 
 
 

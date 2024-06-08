@@ -27,8 +27,20 @@ class Product(models.Model):
 class Basket(models.Model):
     user = models.ForeignKey(to=User, on_delete=models.CASCADE)
     product = models.ForeignKey(to=Product, on_delete=models.CASCADE)
-    quantity = models.PositiveIntegerField(default=0)
+    quantity = models.PositiveIntegerField(default=1)
     created_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f'Basket for: {self.user.username} | Product:{self.product.name}'
+
+
+class Orders(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    quantity = models.PositiveIntegerField(default=1)
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE)
+    basket = models.ForeignKey(to=Basket, on_delete=models.CASCADE, null=True, blank=True)
+
+
+
+
