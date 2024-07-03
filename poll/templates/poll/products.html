@@ -132,11 +132,21 @@
     <div class="container">
         <p class="m-0 text-center text-white">Copyright &copy; Store 2024</p>
     </div>
-    <!-- /.container -->
+
+        <form method="post" action="{% url 'contact' %}">
+            {% csrf_token %}
+                <div class="email-form" style="width: 300px; margin-left: 1010px;">
+                    <label class="text-white" style="font-size: 14px;">
+                        Введите ваш email для отправки сообщения
+                    </label>
+                    {{ form.email }}
+                </div>
+             <button style="width: 120px; height: 40px; margin-left: 1100px; margin-top: 30px;" class="btn btn-success" type="submit">Отправить</button>
+        </form>
+
+
 </footer>
 {% endblock %}
-
-
 
 </body>
 

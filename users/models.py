@@ -8,3 +8,7 @@ class User(AbstractUser):
 
     def __str__(self):
         return f'Email:{self.email}'
+
+
+class Contact(models.Model):
+    email = models.EmailField(max_length=128, unique=True)

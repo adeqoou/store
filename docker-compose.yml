@@ -10,52 +10,37 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-#  web:
-#    build:
-#      dockerfile: Dockerfile
-#      context: .
-#    command: >
-#      bash -c "python manage.py migrate && gunicorn -b 0.0.0.0:8000  my_store:wsgi:application"
-#    volumes:
-#      - .:/app
-#    ports:
-#      - "8000:8000"
-#    depends_on:
-#      - serv_postgres
+
+  django_project:
+    build:
+     dockerfile: ./Dockerfile
+     context: .
+    container_name: yt_django
+    depends_on:
+      - serv_postgres
+    volumes:
+      - static_volume:/yt/staticfiles
+      - media_volume:/yt/media
+    environment:
+      - POSTGRES_HOST=serv_postgres
+    env_file:
+      - .env
+    command: >
+      bash -c "sleep 20 && python manage.py collectstatic --noinput && python manage.py migrate && gunicorn -b 0.0.0.0:8000 my_store.wsgi:application"
+  nginx:
+    build:
+      dockerfile: ./Dockerfile
+      context: ./nginx/
+    container_name: yt_nginx
+    image: yt_nginx
+    volumes:
+      - static_volume:/yt/staticfiles
+      - media_volume:/yt/media
+    depends_on:
+      - django_project
+    ports:
+      - "${NGINX_EXTERNAL_PORT}:80"
 
 volumes:
-  postgres_data:
-
-#  django_project:
-#    build:
-#     dockerfile: ./Dockerfile
-#     context: .
-#    container_name: yt_django
-#    depends_on:
-#      - serv_postgres
-#    volumes:
-#      - static_volume:/yt/staticfiles
-#      - media_volume:/yt/media
-#    environment:
-#      - POSTGRES_HOST=serv_postgres
-#    env_file:
-#      - .env
-#    command: >
-#      bash -c "sleep 20 && python manage.py collectstatic --noinput && python manage.py migrate && gunicorn -b 0.0.0.0:8000 my_store.wsgi:application"
-#  nginx:
-#    build:
-#      dockerfile: ./Dockerfile
-#      context: ./nginx/
-#    container_name: yt_nginx
-#    image: yt_nginx
-#    volumes:
-#      - static_volume:/yt/staticfiles
-#      - media_volume:/yt/media
-#    depends_on:
-#      - django_project
-#    ports:
-#      - "${NGINX_EXTERNAL_PORT}:80"
-#
-#volumes:
-#  static_volume:
-#  media_volume:
+  static_volume:
+  media_volume:

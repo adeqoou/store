@@ -2,3 +2,6 @@
 .env
 just
 venv/
+celerybeat-schedule.bak
+celerybeat-schedule.dir
+celerybeat-schedule.dat

@@ -8,6 +8,10 @@ from django.views.generic import (
     DeleteView)
 from django.urls import reverse_lazy
 from .models import *
+from users.models import Contact
+from .forms import ContactForm
+from django.core.mail import send_mail
+from .tasks import email_send
 
 
 class IndexView(TemplateView):
@@ -23,6 +27,7 @@ class ProductView(ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['categories'] = ProductCategory.objects.all()
+        context['form'] = ContactForm()
         return context
 
 
@@ -111,17 +116,30 @@ class OrderListView(ListView):
 class OrderRemoveView(DeleteView):
     model = Orders
     success_url = reverse_lazy('orders')
+
     def get(self, request, **kwargs):
         order = self.kwargs.get('order')
         order.delete()
         return self.success_url
 
 
+class ContactView(CreateView):
+    model = Contact
+    form_class = ContactForm
+    success_url = reverse_lazy('contact')
+    template_name = 'poll/email_send.html'
 
+    def form_valid(self, form):
+        user_email = form.cleaned_data.get('email')
+        email_send.delay(user_email)
 
-
-
-
-
-
+        send_mail(
+            'Интернет-магазин',
+            f'Почта/ Посетите наш сайт: http://127.0.0.1:8000/',
+            'aidarbekovadahan8@gmail.com',
+            [user_email],
+            fail_silently=False
+        )
+        form.save()
+        return super().form_valid(form)
 
