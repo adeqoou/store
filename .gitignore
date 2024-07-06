@@ -1,7 +1,15 @@
-/.idea/
+.idea
 .env
 just
-venv/
+venv
+
 celerybeat-schedule.bak
 celerybeat-schedule.dir
 celerybeat-schedule.dat
+
+prod_settings.py
+local_settings.py
+
+media/*
+
+store.conf
